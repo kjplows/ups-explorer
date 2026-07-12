@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>
+{{ package }} - UPS Explorer
+</title>
+
+
+<style>
+
+html, body {
+
+    height: 100%;
+
+    margin: 0;
+
+    font-family: sans-serif;
+
+}
+
+
+.page {
+
+    height: 100vh;
+
+    display: grid;
+
+    grid-template-rows: 50px auto;
+
+}
+
+
+
+/* ------------------------------------------------ */
+/* Top navigation                                  */
+/* ------------------------------------------------ */
+
+
+.topbar {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 1em;
+
+    padding-left: 1em;
+
+    border-bottom: 1px solid #aaa;
+
+}
+
+
+.home-button {
+
+    text-decoration: none;
+
+    color: #1565c0;
+
+    border: 1px solid #aaa;
+
+    border-radius: 5px;
+
+    padding: 0.3em 0.8em;
+
+}
+
+
+.jump-form {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 0.5em;
+
+}
+
+
+.jump-form input {
+
+    width: 250px;
+
+}
+
+
+
+/* ------------------------------------------------ */
+/* Main content                                    */
+/* ------------------------------------------------ */
+
+
+.content {
+
+    overflow: auto;
+
+    padding: 1em;
+
+}
+
+
+
+.header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+}
+
+
+
+h1 {
+
+    margin: 0;
+
+}
+
+
+
+/* ------------------------------------------------ */
+/* Build selector                                 */
+/* ------------------------------------------------ */
+
+
+.selector {
+
+    display: flex;
+
+    gap: 0.5em;
+
+    align-items: center;
+
+}
+
+
+.selector input {
+
+    width: 160px;
+
+    padding: 0.3em;
+
+}
+
+
+
+button {
+
+    padding: 0.3em 0.8em;
+
+}
+
+
+
+/* ------------------------------------------------ */
+/* SVG graph                                      */
+/* ------------------------------------------------ */
+
+
+.graph-container {
+
+    margin-top: 1em;
+
+    width: 100%;
+
+    overflow: auto;
+
+}
+
+
+
+.graph-container svg {
+
+    display: block;
+
+}
+
+
+
+.warning {
+
+    margin-top: 1em;
+
+    padding: 1em;
+
+    background: #ffdddd;
+
+    border: 1px solid red;
+
+    color: darkred;
+
+}
+
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+
+
+<!-- ================================================= -->
+<!-- Top bar                                           -->
+<!-- ================================================= -->
+
+
+<div class="topbar">
+
+
+<a class="home-button"
+   href="{{ url_for('index') }}">
+    🏠 Home
+</a>
+
+
+
+<form class="jump-form"
+      action="{{ url_for('search') }}"
+      method="get">
+
+
+<label>
+Jump to package:
+</label>
+
+
+<input
+    name="package"
+    placeholder="Package name..."
+    autocomplete="off"
+>
+
+
+<button>
+Go
+</button>
+
+
+</form>
+
+
+</div>
+
+
+
+
+
+<!-- ================================================= -->
+<!-- Main                                             -->
+<!-- ================================================= -->
+
+
+<div class="content">
+
+
+
+<div class="header">
+
+
+<h1>
+{{ package }}
+</h1>
+
+
+
+<form class="selector"
+      method="get">
+
+
+<input
+    list="versions"
+    name="version"
+    placeholder="Version"
+    autocomplete="off"
+>
+
+
+<datalist id="versions">
+
+{% for v in versions %}
+
+<option value="{{ v }}">
+
+{% endfor %}
+
+</datalist>
+
+
+
+<input
+    list="qualifiers"
+    name="qualifier"
+    placeholder="Qualifier"
+    autocomplete="off"
+>
+
+
+<datalist id="qualifiers">
+
+{% for q in qualifiers %}
+
+<option value="{{ q }}">
+
+{% endfor %}
+
+</datalist>
+
+
+
+<button>
+Load
+</button>
+
+
+</form>
+
+
+
+</div>
+
+
+
+
+
+{% if warning %}
+
+<div class="warning">
+
+{{ warning }}
+
+</div>
+
+{% endif %}
+
+
+
+
+
+<div class="graph-container">
+
+{{ abstract_graph|safe }}
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+</body>
+
+</html>

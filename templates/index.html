@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>
+UPS Explorer
+</title>
+
+
+<style>
+
+body {
+    font-family: sans-serif;
+    margin: 3em;
+}
+
+
+h1 {
+    margin-bottom: 1em;
+}
+
+
+.search-box {
+
+    margin-bottom: 3em;
+
+}
+
+
+input {
+
+    width: 350px;
+    padding: 0.6em;
+    font-size: 1em;
+
+}
+
+
+button {
+
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+
+}
+
+
+.common-title {
+
+    margin-bottom: 1em;
+
+}
+
+
+.package-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(180px, 1fr));
+
+    gap: 1em;
+
+    max-width: 900px;
+
+}
+
+
+.package-card {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    height: 90px;
+
+    border: 1px solid #aaa;
+
+    border-radius: 8px;
+
+    background: #f5f5f5;
+
+    text-decoration: none;
+
+    color: #1565c0;
+
+    font-size: 1.2em;
+
+    transition: background 0.15s ease;
+
+}
+
+
+.package-card:hover {
+
+    background: #e6f0ff;
+
+}
+
+
+.warning {
+
+    margin-top: 1em;
+
+    color: darkred;
+
+    background: #ffdddd;
+
+    padding: 1em;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<h1>
+UPS Explorer
+</h1>
+
+
+
+<div class="search-box">
+
+
+<form action="/search">
+
+
+  <input
+    list="packages"
+    name="package"
+    placeholder="Package name..."
+    autofocus
+    autocomplete="off"
+>
+
+<datalist id="packages">
+
+  {% for p in packages %}
+  <option value="{{p}}">
+  {% endfor %}
+    
+</datalist>
+
+<button>
+Explore
+</button>
+
+
+</form>
+
+
+
+{% if warning %}
+
+<div class="warning">
+{{ warning }}
+</div>
+
+{% endif %}
+
+
+</div>
+
+
+
+
+<h2 class="common-title">
+Common packages
+</h2>
+
+
+<div class="package-grid">
+
+
+<a class="package-card"
+   href="{{ url_for('package', name='sbndcode') }}">
+    sbndcode
+</a>
+
+
+<a class="package-card"
+   href="{{ url_for('package', name='sbncode') }}">
+    sbncode
+</a>
+
+
+<a class="package-card"
+   href="{{ url_for('package', name='sbnanaobj') }}">
+    sbnanaobj
+</a>
+
+
+<a class="package-card"
+   href="{{ url_for('package', name='sbnana') }}">
+    sbnana
+</a>
+
+
+<a class="package-card"
+   href="{{ url_for('package', name='larsoft') }}">
+    larsoft
+</a>
+
+
+<a class="package-card"
+   href="{{ url_for('package', name='nusystematics') }}">
+    nusystematics
+</a>
+
+
+<a class="package-card"
+   href="{{ url_for('package', name='genie') }}">
+    genie
+</a>
+
+
+</div>
+
+
+
+</body>
+
+</html>
